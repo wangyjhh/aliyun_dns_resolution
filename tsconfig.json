@@ -2,8 +2,8 @@
     "compilerOptions": {
         "target": "ESNext",
         "lib": ["ESNext"],
-        "module": "ESNext",
-        "moduleResolution": "node",
+        "module": "CommonJS",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "strict": true,
         "strictNullChecks": true,
@@ -12,5 +12,5 @@
         "skipDefaultLibCheck": true,
         "skipLibCheck": true
     },
-    "include": ["src"]
+    "include": ["bin/**/*", "types/**/*", "utils/**/*"]
 }

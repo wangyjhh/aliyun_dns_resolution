@@ -6,8 +6,6 @@ import { logv } from '../../utils/index'
 import {
     msgr_add_rules,
     msgr_config,
-    msgr_get_v4,
-    msgr_get_v6,
     msgr_modify_rules,
     msgr_query_rules,
     msgr_remove_rules,

@@ -1,3 +1,11 @@
+import type {
+    AddDomainRecordRequestArgs,
+    ConfigurationType,
+    DeleteDomainRecordArgs,
+    DescribeDomainRecordsRequestArgs,
+    DescribeDomainRecordsResponse,
+    UpdateDomainRecordArgs,
+} from '../types'
 import process from 'node:process'
 import DNS, * as $DNS from '@alicloud/alidns20150109'
 import * as $OpenApi from '@alicloud/openapi-client'
@@ -32,13 +40,16 @@ export class Client {
      * 获取域名列表
      * @returns string[]
      */
-    static async getDomainsList(args = {}): Promise<any> {
+    static async getDomainsList(args = {}): Promise<string[]> {
         const client = Client.createClient()
         const request = new $DNS.DescribeDomainsRequest(args)
         const runtime = new $Util.RuntimeOptions({})
         try {
             const list = (await client.describeDomainsWithOptions(request, runtime)).body?.domains?.domain
-            return list?.map((item: $DNS.DescribeDomainsResponseBodyDomainsDomain) => item.domainName)
+            if (!list) {
+                return []
+            }
+            return list.map((item: $DNS.DescribeDomainsResponseBodyDomainsDomain) => item.domainName!)
         }
         catch (error: any) {
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
@@ -51,19 +62,23 @@ export class Client {
      * 获取域名解析记录列表
      * @returns any
      */
-    static async getDomainRecordsList(args: DescribeDomainRecordsRequestArgs): Promise<any> {
+    static async getDomainRecordsList(args: DescribeDomainRecordsRequestArgs): Promise<DescribeDomainRecordsResponse[]> {
         const client = Client.createClient()
         const request = new $DNS.DescribeDomainRecordsRequest(args)
         const runtime = new $Util.RuntimeOptions({})
         try {
             const list = (await client.describeDomainRecordsWithOptions(request, runtime)).body?.domainRecords?.record
-            return list?.map((item: $DNS.DescribeDomainRecordsResponseBodyDomainRecordsRecord) => {
+            if (!list) {
+                return []
+            }
+            return list.map((item) => {
                 return {
-                    RR: item.RR,
-                    type: item.type,
-                    value: item.value,
-                    TTL: item.TTL,
-                    status: item.status,
+                    RR: item.RR!,
+                    type: item.type!,
+                    value: item.value!,
+                    TTL: item.TTL!,
+                    status: item.status!,
+                    recordId: item.recordId!,
                 }
             })
         }
@@ -75,27 +90,64 @@ export class Client {
 
     /**
      * @remarks
-     * 获取安全组规则ID
+     * 添加域名解析记录
      * @returns any
      */
+    static async addDomainRecord(args: AddDomainRecordRequestArgs): Promise<any> {
+        const client = Client.createClient()
+        const request = new $DNS.AddDomainRecordRequest(args)
+        const runtime = new $Util.RuntimeOptions({})
+        try {
+            const response = (await client.addDomainRecordWithOptions(request, runtime))
+            if (response.statusCode === 200)
+                logf('The domain record was added successfully.\n', 'success')
+            return response
+        }
+        catch (error: any) {
+            logf(`${error.data.Message}\n`, 'error', 'ERROR')
+            process.exit(1)
+        }
+    }
 
     /**
      * @remarks
-     * 添加入方向安全组规则
+     * 删除域名解析记录
      * @returns any
      */
+    static async deleteDomainRecord(args: DeleteDomainRecordArgs): Promise<any> {
+        const client = Client.createClient()
+        const request = new $DNS.DeleteDomainRecordRequest(args)
+        const runtime = new $Util.RuntimeOptions({})
+        try {
+            const response = (await client.deleteDomainRecordWithOptions(request, runtime))
+            if (response.statusCode === 200)
+                logf('The domain record was deleted successfully.\n', 'success')
+            return response
+        }
+        catch (error: any) {
+            logf(`${error.data.Message}\n`, 'error', 'ERROR')
+            process.exit(1)
+        }
+    }
 
     /**
      * @remarks
-     * 删除入方向安全组规则
+     * 修改域名解析记录
      * @returns any
      */
-
-    /**
-     * @remarks
-     * 修改北京安全组规则
-     * @param endpoint 参数
-     * @param args 参数
-     * @returns any
-     */
+    static async updateDomainRecord(args: UpdateDomainRecordArgs): Promise<any> {
+        const client = Client.createClient()
+        const request = new $DNS.UpdateDomainRecordRequest(args)
+        const runtime = new $Util.RuntimeOptions({})
+        try {
+            const response = (await client.updateDomainRecordWithOptions(request, runtime))
+            if (response.statusCode === 200)
+                logf('The domain record was updated successfully.\n', 'success')
+            return response
+        }
+        catch (error: any) {
+            logf(`${error.data.Message}\n`, 'error', 'ERROR')
+            process.exit(1)
+        }
+    }
 }

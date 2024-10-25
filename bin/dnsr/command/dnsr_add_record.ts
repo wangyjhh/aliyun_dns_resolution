@@ -1,10 +1,8 @@
 import inquirer from 'inquirer'
-import { Client, getEndpoint, getPublicIP, getRegionIdAndGroupId } from '../../../utils'
+import { Client } from '../../../utils'
 
 export const msgr_add_rules = async () => {
     const { regionId, securityGroupId } = await getRegionIdAndGroupId()
-
-    const publicIP = await getPublicIP()
 
     const { policy, priority, ipProtocol, portRange, sourceCidrIp, description } = await inquirer.prompt([
         {

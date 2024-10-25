@@ -1,5 +1,5 @@
 export * from './aliyunDnsClient'
 export * from './configHandle'
+export * from './dnsrArgsHandle'
 export * from './formatOutput'
-// export * from './msgrArgsHandle'
 export * from './printVersion'

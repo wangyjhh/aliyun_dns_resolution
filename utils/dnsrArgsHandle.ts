@@ -3,37 +3,25 @@ import columnify from 'columnify'
 import inquirer from 'inquirer'
 import { Client, logf } from '.'
 
-export const getRegionIdAndGroupId = async () => {
-    const { regionId } = await inquirer.prompt([
-        {
-            type: 'list',
-            loop: false,
-            name: 'regionId',
-            message: 'Please select a region.',
-            choices: regionIdMap,
-        },
-    ])
+export const getDomain = async () => {
+    const domainsList = await Client.getDomainsList()
 
-    const groupIds = await Client.getSecurityGroupId(getEndpoint(regionId), {
-        regionId,
-    })
-
-    if (groupIds.length === 0) {
-        logf('There is no security group in this area.\n', 'warning', 'WARNING')
+    if (domainsList.length === 0) {
+        logf('There is no domains in you account.\n', 'warning', 'WARNING')
         process.exit(0)
     }
 
-    const { securityGroupId } = await inquirer.prompt([
+    const { domain } = await inquirer.prompt([
         {
             type: 'list',
             loop: false,
-            name: 'securityGroupId',
-            message: 'Select a security group ID.',
-            choices: groupIds,
+            name: 'domain',
+            message: 'Select a domain.',
+            choices: domainsList,
         },
     ])
 
-    return { securityGroupId, regionId }
+    return { domain }
 }
 
 export const getRegionIdAndGroupIdAndGroupRuleId = async () => {

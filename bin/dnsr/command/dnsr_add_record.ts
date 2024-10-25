@@ -1,7 +1,6 @@
 import inquirer from 'inquirer'
+import { domainType } from '../../../types'
 import { Client, getDomain } from '../../../utils'
-
-const domainType = ['A', 'AAAA', 'CNAME', 'MX', 'TXT', 'NS', 'SRV', 'CAA', 'REDIRECT_URL', 'FORWARD_URL']
 
 export const dnsr_add_record = async () => {
     const { domain } = await getDomain()

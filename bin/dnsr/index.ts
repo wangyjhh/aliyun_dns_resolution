@@ -5,10 +5,10 @@ import pkg from '../../package.json'
 import { logv } from '../../utils/index'
 import {
     dnsr_add_record,
+    dnsr_delete_record,
     dnsr_query_records,
     msgr_config,
     msgr_modify_rules,
-    msgr_remove_rules,
 } from './command'
 
 const program = new Command()
@@ -50,7 +50,7 @@ program.command('list').aliases(['ls']).description('Review the domain records.'
 // 新增安全组规则
 program.command('add').aliases(['ad', 'insert']).description('Add the domain records.').action(dnsr_add_record)
 // 删除安全组规则
-program.command('remove').aliases(['rm', 'delete']).description('Remove the domain records.').action(msgr_remove_rules)
+program.command('remove').aliases(['rm', 'delete']).description('Remove the domain records.').action(dnsr_delete_record)
 // 修改安全组规则
 program.command('modify').aliases(['mo', 'edit']).description('Modify the domain records.').action(msgr_modify_rules)
 

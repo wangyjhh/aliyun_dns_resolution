@@ -24,49 +24,50 @@ export const getDomain = async () => {
     return { domain }
 }
 
-export const getRegionIdAndGroupIdAndGroupRuleId = async () => {
-    const { regionId, securityGroupId } = await getRegionIdAndGroupId()
-    const res: any[] = await Client.getSecurityGroup(getEndpoint(regionId), {
-        regionId,
-        securityGroupId,
+export const getRecordId = async () => {
+    const { domain } = await getDomain()
+
+    const res = await Client.getDomainRecordsList({
+        domainName: domain,
     })
 
-    const securityGroups = res.map((item: SecurityGroupAttributesType) => {
+    const regRR = /^_/g
+
+    const domainRecords = res.filter(record => !(record.RR.match(regRR))).map((record) => {
         return {
             name: `${columnify(
                 [
                     {
-                        policy: item.policy,
-                        priority: item.priority,
-                        ipProtocol: item.ipProtocol,
-                        portRange: item.portRange,
-                        sourceCidrIp: item.sourceCidrIp,
-                        description: item.description,
+                        RR: record.RR!,
+                        type: record.type!,
+                        value: record.value!,
+                        TTL: record.TTL!,
+                        status: record.status!,
                     },
                 ],
                 {
                     showHeaders: false,
                     config: {
-                        policy: { minWidth: 6, maxWidth: 6 },
-                        priority: { minWidth: 3, maxWidth: 3 },
-                        ipProtocol: { minWidth: 4, maxWidth: 4 },
-                        portRange: { minWidth: 12, maxWidth: 12 },
-                        sourceCidrIp: { minWidth: 20, maxWidth: 20 },
+                        RR: { minWidth: 6, maxWidth: 6 },
+                        type: { minWidth: 12, maxWidth: 12 },
+                        value: { minWidth: 15, maxWidth: 15 },
+                        TTL: { minWidth: 4, maxWidth: 4 },
+                        status: { minWidth: 6, maxWidth: 6 },
                     },
                 },
             )}`,
-            value: item.securityGroupRuleId,
+            value: record.recordId,
         }
     })
 
-    const { securityGroupRuleId } = await inquirer.prompt([
+    const { recordId } = await inquirer.prompt([
         {
             type: 'list',
             loop: false,
-            name: 'securityGroupRuleId',
-            message: 'Select the security group rule that needs to be modified.',
-            choices: securityGroups,
+            name: 'recordId',
+            message: 'Select the record that needs to be modified.',
+            choices: domainRecords,
         },
     ])
-    return { securityGroupId, regionId, securityGroupRuleId }
+    return { recordId }
 }

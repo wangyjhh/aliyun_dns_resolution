@@ -1,5 +1,5 @@
 export * from './dnsr_add_record'
+export * from './dnsr_delete_record'
 export * from './dnsr_query_records'
 export * from './msgr_config'
 export * from './msgr_modify_rules'
-export * from './msgr_remove_rules'

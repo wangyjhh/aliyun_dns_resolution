@@ -18,6 +18,7 @@
     "scripts": {
         "lint": "eslint .",
         "fix": "eslint . --fix",
+        "test": "tsx test/index.test.ts",
         "build": "unbuild && tsx script/copy-files.ts",
         "prepublish": "pnpm unl && pnpm build",
         "publish": "npm publish"

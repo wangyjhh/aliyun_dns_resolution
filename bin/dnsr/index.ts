@@ -4,8 +4,8 @@ import commander, { Command } from 'commander'
 import pkg from '../../package.json'
 import { logv } from '../../utils/index'
 import {
+    dnsr_add_record,
     dnsr_query_records,
-    msgr_add_rules,
     msgr_config,
     msgr_modify_rules,
     msgr_remove_rules,
@@ -48,7 +48,7 @@ program
 // 查看域名解析记录
 program.command('list').aliases(['ls']).description('Review the domain records.').action(dnsr_query_records)
 // 新增安全组规则
-program.command('add').aliases(['ad', 'insert']).description('Add the domain records.').action(msgr_add_rules)
+program.command('add').aliases(['ad', 'insert']).description('Add the domain records.').action(dnsr_add_record)
 // 删除安全组规则
 program.command('remove').aliases(['rm', 'delete']).description('Remove the domain records.').action(msgr_remove_rules)
 // 修改安全组规则

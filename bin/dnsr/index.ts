@@ -7,8 +7,8 @@ import {
     dnsr_add_record,
     dnsr_delete_record,
     dnsr_query_records,
+    dnsr_update_record,
     msgr_config,
-    msgr_modify_rules,
 } from './command'
 
 const program = new Command()
@@ -52,7 +52,7 @@ program.command('add').aliases(['ad', 'insert']).description('Add the domain rec
 // 删除安全组规则
 program.command('remove').aliases(['rm', 'delete']).description('Remove the domain records.').action(dnsr_delete_record)
 // 修改安全组规则
-program.command('modify').aliases(['mo', 'edit']).description('Modify the domain records.').action(msgr_modify_rules)
+program.command('modify').aliases(['mo', 'edit']).description('Modify the domain records.').action(dnsr_update_record)
 
 program.version(logv(pkg.version), '-v, --version', 'Output version number.')
 

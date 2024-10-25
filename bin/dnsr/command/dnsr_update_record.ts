@@ -1,5 +1,5 @@
 import inquirer from 'inquirer'
-import { Client, getEndpoint, getPublicIP, getRegionIdAndGroupIdAndGroupRuleId } from '../../../utils'
+import { Client } from '../../../utils'
 
 const attributeMap = ['policy', 'priority', 'ipProtocol', 'portRange', 'sourceCidrIp', 'description']
 
@@ -23,7 +23,7 @@ const getAttributeChoicesList = () => {
     })
 }
 
-export const msgr_modify_rules = async () => {
+export const dnsr_update_record = async () => {
     const { regionId, securityGroupId, securityGroupRuleId } = await getRegionIdAndGroupIdAndGroupRuleId()
 
     const { attribute }: { attribute: string } = await inquirer.prompt([

@@ -7,7 +7,7 @@ export const dnsr_delete_record = async () => {
     const { confirm } = await inquirer.prompt({
         type: 'confirm',
         name: 'confirm',
-        message: `Are you sure you want to remove this record ?`,
+        message: `Are you sure you want to delete this record ?`,
         default: false,
     })
 

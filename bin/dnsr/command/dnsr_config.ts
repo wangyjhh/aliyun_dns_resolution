@@ -1,8 +1,9 @@
+import type { ConfigurationType } from '../../../types'
 import { writeFileSync } from 'fs-extra'
 import inquirer from 'inquirer'
 import { configPath, getConfig, logf } from '../../../utils'
 
-export const msgr_config = async (type: string) => {
+export const dnsr_config = async (type: string) => {
     let AccessKeyConfig = getConfig('all') as ConfigurationType
 
     if (type === 'set') {
@@ -48,7 +49,7 @@ export const msgr_config = async (type: string) => {
         }
 
         writeFileSync(configPath, JSON.stringify(AccessKeyConfig))
-        logf(`AThe AccessKey is successfully inserted.\n`, 'success')
+        logf(`The AccessKey is successfully inserted.\n`, 'success')
     }
 
     if (type === 'default') {

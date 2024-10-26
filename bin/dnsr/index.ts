@@ -5,10 +5,10 @@ import pkg from '../../package.json'
 import { logv } from '../../utils/index'
 import {
     dnsr_add_record,
+    dnsr_config,
     dnsr_delete_record,
     dnsr_query_records,
     dnsr_update_record,
-    msgr_config,
 } from './command'
 
 const program = new Command()
@@ -43,7 +43,7 @@ program
     )
     .addArgument(new commander.Argument('<tpye>', 'Config type. [set][get][default][remove][clear]'))
     .description('Configuration')
-    .action(msgr_config)
+    .action(dnsr_config)
 
 // 查看域名解析记录
 program.command('list').aliases(['ls']).description('Review the domain records.').action(dnsr_query_records)

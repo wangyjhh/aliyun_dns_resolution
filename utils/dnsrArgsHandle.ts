@@ -70,7 +70,7 @@ export const getRecord = async () => {
             type: 'list',
             loop: false,
             name: 'record',
-            message: 'Select the record that needs to be modified.',
+            message: 'Select the record that needs to be updated.',
             choices: domainRecords,
         },
     ])

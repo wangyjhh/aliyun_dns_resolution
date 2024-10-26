@@ -24,7 +24,7 @@ export const getDomain = async () => {
     return { domain }
 }
 
-export const getRecordId = async () => {
+export const getRecord = async () => {
     const { domain } = await getDomain()
 
     const res = await Client.getDomainRecordsList({
@@ -56,18 +56,23 @@ export const getRecordId = async () => {
                     },
                 },
             )}`,
-            value: record.recordId,
+            value: {
+                recordId: record.recordId,
+                RR: record.RR,
+                type: record.type,
+                value: record.value,
+            },
         }
     })
 
-    const { recordId } = await inquirer.prompt([
+    const { record } = await inquirer.prompt([
         {
             type: 'list',
             loop: false,
-            name: 'recordId',
+            name: 'record',
             message: 'Select the record that needs to be modified.',
             choices: domainRecords,
         },
     ])
-    return { recordId }
+    return { record }
 }

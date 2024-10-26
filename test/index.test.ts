@@ -1,5 +1,5 @@
 import { log } from 'node:console'
-import { Client } from '../utils'
+import { Client, getRecord } from '../utils'
 
 const test1 = async () => {
     const res = await Client.getDomainsList()
@@ -38,8 +38,14 @@ const test5 = async () => {
     log(res)
 }
 
+const test6 = async () => {
+    const { record } = await getRecord()
+    log(record.recordId)
+}
+
 test1()
 test2()
 // test3()
 // test4()
-test5()
+// test5()
+test6()

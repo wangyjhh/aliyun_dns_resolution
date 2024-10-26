@@ -1,8 +1,8 @@
 import inquirer from 'inquirer'
-import { Client, getRecordId } from '../../../utils'
+import { Client, getRecord } from '../../../utils'
 
 export const dnsr_delete_record = async () => {
-    const { recordId } = await getRecordId()
+    const { record } = await getRecord()
 
     const { confirm } = await inquirer.prompt({
         type: 'confirm',
@@ -13,7 +13,7 @@ export const dnsr_delete_record = async () => {
 
     if (confirm) {
         await Client.deleteDomainRecord({
-            recordId,
+            recordId: record.recordId,
         })
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@wangyjhh/dnsr",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "This is a command line tool for quick operation of Alibaba Clound Dns Resolution.",
     "author": "wangyjhh",
     "license": "MIT",
@@ -10,7 +10,7 @@
     "keywords": [],
     "main": "dist/bin/dnsr/index.cjs",
     "bin": {
-        "msgr": "dist/bin/dnsr/index.cjs"
+        "dnsr": "dist/bin/dnsr/index.cjs"
     },
     "files": [
         "dist"
@@ -20,7 +20,7 @@
         "fix": "eslint . --fix",
         "test": "tsx test/index.test.ts",
         "build": "unbuild && tsx script/copy-files.ts",
-        "prepublish": "pnpm unl && pnpm build",
+        "prepublish": "pnpm build",
         "publish": "npm publish"
     },
     "dependencies": {

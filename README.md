@@ -1,6 +1,6 @@
 # @wangyjhh/dnsr
 
-A security group rule management tool for Alibaba Cloud ESC implemented based on the official SDK.
+A domain records management tool for Alibaba Cloud DNS implemented based on the official SDK.
 
 ## Install
 ```bash
@@ -15,7 +15,7 @@ pnpm add @wangyjhh/dnsr -g
 ```html
 Usage: dnsr [options] [command]
 
-Alibaba Cloud security group rule management tool.
+Alibaba Cloud Domain Records management tool.
 
 Options:
   -v, --version                      Output version number.
@@ -23,37 +23,37 @@ Options:
 
 Commands:
   config <tpye>                      Configuration
-  list|ls                            Review the security group rules.
-  add|ad                             Add the security group rules.
-  remove|rm                          Remove the security group rules.
-  modify|mo                          Modify the security group rules.
+  list|ls                            Review the domain records.
+  add|ad                             Add the domain records.
+  remove|rm                          Remove the domain records.
+  modify|mo                          Modify the domain records.
   help [command]                     display help for command
 ```
 ## Example
 
 Enter the command and fill in the necessary information according to the command line instructions
 
-#### Get config
+#### Get Config
 ```bash
 dnsr config get
 ```
-#### Set config
+#### Set Config
 ```bash
 dnsr config set
 ```
-#### Default config
+#### Default Config
 ```bash
 dnsr config default
 ```
-#### Remove config
+#### Remove Config
 ```bash
 dnsr config remove
 ```
-#### Clear config
+#### Clear Config
 ```bash
 dnsr config clear
 ```
-#### Get Security group rules list
+#### Get Domain Records List
 ```bash
 dnsr list
 ```
@@ -61,7 +61,7 @@ dnsr list
 # The following commands will also work
 dnsr ls
 ```
-#### Add Security group rules
+#### Add Domain Records
 ```bash
 dnsr add
 ```
@@ -70,7 +70,7 @@ dnsr add
 dnsr ad
 dnsr insert
 ```
-#### Remove Security group rules
+#### Remove Domain Records
 ```bash
 dnsr remove
 ```
@@ -79,7 +79,7 @@ dnsr remove
 dnsr rm
 dnsr delete
 ```
-#### Modify Security group rules
+#### Modify Domain Records
 ```bash
 dnsr modify
 ```

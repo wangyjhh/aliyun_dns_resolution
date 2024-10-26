@@ -12,6 +12,6 @@ filesToCopy.forEach((file) => {
 
 const pkg = JSON.parse(readFileSync(path.resolve(__dirname, '../', 'dist', 'package.json'), 'utf-8'))
 
-pkg.main = './bin/msgr/index.cjs'
-pkg.bin = './bin/msgr/index.cjs'
+pkg.main = './bin/dnsr/index.cjs'
+pkg.bin = './bin/dnsr/index.cjs'
 writeJSONSync(path.resolve(__dirname, '../', 'dist', 'package.json'), pkg, { spaces: 4 })

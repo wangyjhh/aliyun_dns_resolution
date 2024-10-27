@@ -2,10 +2,12 @@ import type { ConfigurationItem, ConfigurationType } from '../types'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 import process from 'node:process'
-import { ensureFileSync, readFileSync } from 'fs-extra'
-import { logf } from '.'
+import { ensureFileSync, readFileSync, writeFileSync } from 'fs-extra'
+import { Client, logf } from '.'
 
 export const configPath = join(homedir(), '.msgr', 'config')
+
+export const tempPath = join(homedir(), '.msgr', 'temp')
 
 export const getConfig = (mode: 'default' | 'all') => {
     ensureFileSync(configPath)
@@ -22,6 +24,24 @@ export const getConfig = (mode: 'default' | 'all') => {
     if (mode === 'all') {
         return JSON.parse(configContent) as ConfigurationType
     }
+}
+
+export const getDomainsTemp = () => {
+    ensureFileSync(tempPath)
+    const domainstempContent = readFileSync(tempPath, 'utf-8')
+    if (!domainstempContent)
+        return {}
+    return JSON.parse(domainstempContent)
+}
+
+export const setDomainsTemp = (domains: string[]) => {
+    const domainstempContent = JSON.stringify({ domains })
+    writeFileSync(tempPath, domainstempContent)
+}
+
+export const clearDomainsTemp = async () => {
+    writeFileSync(tempPath, '')
+    logf('Domains cache cleared. Please run the command again.\n', 'warning')
 }
 
 export const configIsEmpty = (config: ConfigurationType) => {

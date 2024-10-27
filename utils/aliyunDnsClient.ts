@@ -10,7 +10,7 @@ import process from 'node:process'
 import DNS, * as $DNS from '@alicloud/alidns20150109'
 import * as $OpenApi from '@alicloud/openapi-client'
 import * as $Util from '@alicloud/tea-util'
-import { configIsEmpty, getConfig, logf } from '.'
+import { clearDomainsTemp, configIsEmpty, getConfig, getDomainsTemp, logf, setDomainsTemp } from '.'
 
 export class Client {
     /**
@@ -49,11 +49,29 @@ export class Client {
             if (!list) {
                 return []
             }
-            return list.map((item: $DNS.DescribeDomainsResponseBodyDomainsDomain) => item.domainName!)
+            const domains = list.map((item: $DNS.DescribeDomainsResponseBodyDomainsDomain) => item.domainName!)
+            setDomainsTemp(domains)
+            return domains
         }
         catch (error: any) {
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
             process.exit(1)
+        }
+    }
+
+    /**
+     * @remarks
+     * 获取域名列表(带缓存)
+     * @returns string[]
+     */
+    static async getDomainsListCache(): Promise<string[]> {
+        const temp = getDomainsTemp()
+        if (Object.keys(temp).length !== 0) {
+            logf('Use the cache domain name list', 'warning')
+            return temp.domains
+        }
+        else {
+            return await Client.getDomainsList()
         }
     }
 
@@ -83,6 +101,9 @@ export class Client {
             })
         }
         catch (error: any) {
+            if (error.data.Message.includes('The domain name belongs to other users.')) {
+                clearDomainsTemp()
+            }
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
             process.exit(1)
         }
@@ -104,6 +125,9 @@ export class Client {
             return response
         }
         catch (error: any) {
+            if (error.data.Message.includes('The domain name belongs to other users.')) {
+                clearDomainsTemp()
+            }
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
             process.exit(1)
         }
@@ -125,6 +149,9 @@ export class Client {
             return response
         }
         catch (error: any) {
+            if (error.data.Message.includes('The domain name belongs to other users.')) {
+                clearDomainsTemp()
+            }
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
             process.exit(1)
         }
@@ -146,6 +173,9 @@ export class Client {
             return response
         }
         catch (error: any) {
+            if (error.data.Message.includes('The domain name belongs to other users.')) {
+                clearDomainsTemp()
+            }
             logf(`${error.data.Message}\n`, 'error', 'ERROR')
             process.exit(1)
         }

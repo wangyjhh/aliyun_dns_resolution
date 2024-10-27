@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 import { Client, logf } from '.'
 
 export const getDomain = async () => {
-    const domainsList = await Client.getDomainsList()
+    const domainsList = await Client.getDomainsListCache()
 
     if (domainsList.length === 0) {
         logf('There is no domains in you account.\n', 'warning', 'WARNING')
